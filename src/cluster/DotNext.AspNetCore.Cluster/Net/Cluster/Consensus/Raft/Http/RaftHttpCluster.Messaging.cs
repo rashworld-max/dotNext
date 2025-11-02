@@ -30,7 +30,7 @@ internal partial class RaftHttpCluster : IOutputChannel
         var tokenSource = CombineTokens([LifecycleToken, token]);
         do
         {
-            var leader = Leader ?? throw new InvalidOperationException(ExceptionMessages.LeaderIsUnavailable);
+            var leader = Leader ?? throw new QuorumUnreachableException();
             try
             {
                 return await (leader.IsRemote
@@ -69,7 +69,7 @@ internal partial class RaftHttpCluster : IOutputChannel
         using var tokenSource = CombineTokens([token, LifecycleToken]);
         do
         {
-            var leader = Leader ?? throw new InvalidOperationException(ExceptionMessages.LeaderIsUnavailable);
+            var leader = Leader ?? throw new QuorumUnreachableException();
             try
             {
                 return await (leader.IsRemote
@@ -110,7 +110,7 @@ internal partial class RaftHttpCluster : IOutputChannel
         using var tokenSource = CombineTokens([token, LifecycleToken]);
         do
         {
-            var leader = Leader ?? throw new InvalidOperationException(ExceptionMessages.LeaderIsUnavailable);
+            var leader = Leader ?? throw new QuorumUnreachableException();
             try
             {
                 var response = leader.IsRemote
