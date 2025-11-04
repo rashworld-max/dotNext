@@ -44,7 +44,7 @@ All these things are implemented in 100% managed code on top of existing .NET AP
 * [NuGet Packages](https://www.nuget.org/profiles/rvsakno)
 
 # What's new
-Release Date: 11-03-2025
+Release Date: 11-04-2025
 
 <a href="https://www.nuget.org/packages/dotnext/5.26.1">DotNext 5.26.1</a>
 * Lock upgrade logic provided by `ReaderWriterSpinLock` is adjusted according to [275](https://github.com/dotnet/dotNext/issues/275)
@@ -60,6 +60,7 @@ Release Date: 11-03-2025
 * Improved accuracy of `CancellationTokenMultiplexer.Scope.IsTimedOut` property
 
 <a href="https://www.nuget.org/packages/dotnext.io/5.26.1">DotNext.IO 5.26.1</a>
+* Added auxiliary `MemorySegmentStream` wrapper over [Memory&lt;byte&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.memory-1) type in the form of the writable stream
 * Updated dependencies
 
 <a href="https://www.nuget.org/packages/dotnext.net.cluster/5.26.1">DotNext.Net.Cluster 5.26.1</a>
