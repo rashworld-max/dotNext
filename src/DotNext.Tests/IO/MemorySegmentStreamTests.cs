@@ -2,12 +2,12 @@ using System.Text;
 
 namespace DotNext.IO;
 
-public sealed class FixedLengthStreamTests : Test
+public sealed class MemorySegmentStreamTests : Test
 {
     private static async Task ReadWriteStringUsingEncodingAsync(string value, Encoding encoding, LengthFormat lengthEnc)
     {
         Memory<byte> buffer = new byte[16];
-        await using var ms = new FixedLengthStream(new byte[1024]);
+        await using var ms = new MemorySegmentStream(new byte[1024]);
         await ms.EncodeAsync(value.AsMemory(), encoding, lengthEnc, buffer);
         ms.Position = 0;
         using var result = await ms.DecodeAsync(encoding, lengthEnc, buffer);
@@ -36,7 +36,7 @@ public sealed class FixedLengthStreamTests : Test
     [InlineData(true)]
     public static void Overflow(bool skipOnOverflow)
     {
-        using var stream = new FixedLengthStream(new byte[128]) { SkipOnOverflow = skipOnOverflow };
+        using var stream = new MemorySegmentStream(new byte[128]) { SkipOnOverflow = skipOnOverflow };
         ReadOnlyMemory<byte> dataToWrite = RandomBytes(256);
 
         if (skipOnOverflow)
@@ -56,7 +56,7 @@ public sealed class FixedLengthStreamTests : Test
     {
         const int bufferSize = 128;
         Memory<byte> buffer = new byte[bufferSize];
-        using var stream = new FixedLengthStream(buffer);
+        using var stream = new MemorySegmentStream(buffer);
         True(stream.ConsumedSpan.IsEmpty);
         False(stream.RemainingSpan.IsEmpty);
         
@@ -77,7 +77,7 @@ public sealed class FixedLengthStreamTests : Test
     {
         const int bufferSize = 128;
         Memory<byte> buffer = new byte[bufferSize];
-        await using var stream = new FixedLengthStream(buffer);
+        await using var stream = new MemorySegmentStream(buffer);
         True(stream.ConsumedSpan.IsEmpty);
         False(stream.RemainingSpan.IsEmpty);
 
@@ -98,7 +98,7 @@ public sealed class FixedLengthStreamTests : Test
     {
         const int bufferSize = 128;
         Memory<byte> buffer = new byte[bufferSize];
-        using var stream = new FixedLengthStream(buffer);
+        using var stream = new MemorySegmentStream(buffer);
         
         ReadOnlySpan<byte> dataToWrite = RandomBytes(bufferSize);
         stream.Write(dataToWrite);
@@ -114,7 +114,7 @@ public sealed class FixedLengthStreamTests : Test
     {
         const int bufferSize = 128;
         Memory<byte> buffer = new byte[bufferSize];
-        using var stream = new FixedLengthStream(buffer);
+        using var stream = new MemorySegmentStream(buffer);
         
         Throws<ArgumentOutOfRangeException>(() => stream.SetLength(-1L));
         Throws<IOException>(() => stream.SetLength(bufferSize + 1));

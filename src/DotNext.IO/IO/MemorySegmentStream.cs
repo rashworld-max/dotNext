@@ -6,7 +6,7 @@ namespace DotNext.IO;
 /// Represents a stream wrapper over the memory block.
 /// </summary>
 /// <param name="data">The mutable memory block.</param>
-public sealed class FixedLengthStream(Memory<byte> data) : ModernStream
+public sealed class MemorySegmentStream(Memory<byte> data) : ModernStream
 {
     private int position, length = data.Length;
 
