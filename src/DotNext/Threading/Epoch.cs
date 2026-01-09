@@ -381,7 +381,7 @@ public partial class Epoch
         {
             ArgumentNullException.ThrowIfNull(callback);
 
-            state.Defer(new ActionNode(callback));
+            state.Defer(Handle, new ActionNode(callback));
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ public partial class Epoch
         {
             ArgumentNullException.ThrowIfNull(callback);
 
-            state.Defer(new ActionNode<T>(arg, callback));
+            state.Defer(Handle, new ActionNode<T>(arg, callback));
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ public partial class Epoch
         /// <typeparam name="TWorkItem">The type of the callback.</typeparam>
         public void Defer<TWorkItem>(TWorkItem workItem)
             where TWorkItem : struct, IThreadPoolWorkItem
-            => state.Defer(new WorkItem<TWorkItem>(workItem));
+            => state.Defer(Handle, new WorkItem<TWorkItem>(workItem));
 
         /// <summary>
         /// Registers an object to be disposed at some point in future when the resource protected by the epoch is no longer
@@ -421,7 +421,7 @@ public partial class Epoch
         {
             ArgumentNullException.ThrowIfNull(disposable);
 
-            state.Defer(new Cleanup(disposable));
+            state.Defer(Handle, new Cleanup(disposable));
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ public partial class Epoch
         {
             ArgumentNullException.ThrowIfNull(discardable);
 
-            state.Defer(discardable);
+            state.Defer(Handle, discardable);
         }
 
         /// <summary>

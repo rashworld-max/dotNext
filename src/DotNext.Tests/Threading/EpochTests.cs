@@ -22,9 +22,6 @@ public sealed class EpochTests : Test
         epoch.Enter(drainGlobalCache: null).Dispose();
         Equal(0, state.Value);
 
-        epoch.Enter().Dispose();
-        Equal(0, state.Value);
-
         epoch.Enter(drainGlobalCache: true, out Epoch.RecycleBin action).Dispose();
         False(action.IsEmpty);
         Equal(0, state.Value);

@@ -238,14 +238,22 @@ public partial class Epoch
 
         [UnscopedRef] internal readonly ReadOnlySpan<Entry> Entries => entries;
 
-        [MethodImpl(MethodImplOptions.NoInlining)] // compiler-level barrier to avoid 'globalEpoch' cached reads
-        internal readonly void Defer(Discardable node) => entries[globalEpoch].Defer(node);
+        internal readonly void Defer(uint currentEpoch, Discardable node) => entries[currentEpoch].Defer(node);
 
         internal uint Enter()
         {
-            var currentEpoch = globalEpoch;
-            Interlocked.Increment(ref entries[currentEpoch].Counter); // acts as a barrier for 'globalEpoch' reads
-            return currentEpoch;
+            for (;;)
+            {
+                var currentEpoch = globalEpoch;
+                ref var counter = ref entries[currentEpoch].Counter;
+                Interlocked.Increment(ref counter);
+
+                if (currentEpoch == globalEpoch)
+                    return currentEpoch;
+
+                // rollback and try again
+                Interlocked.Decrement(ref counter);
+            }
         }
 
         internal void Exit(uint epoch)
@@ -260,10 +268,8 @@ public partial class Epoch
             ref readonly var currentEpochState = ref entries[currentEpoch];
             var nextEpochIndex = currentEpochState.Next;
             ref readonly var previousEpochState = ref entries[currentEpochState.Previous];
-            ref readonly var nextEpochState = ref entries[nextEpochIndex];
 
             return previousEpochState.Counter is 0U
-                   && nextEpochState.Counter is 0U
                    && Interlocked.CompareExchange(ref globalEpoch, nextEpochIndex, currentEpoch) == currentEpoch
                 ? new(in previousEpochState)
                 : default;
