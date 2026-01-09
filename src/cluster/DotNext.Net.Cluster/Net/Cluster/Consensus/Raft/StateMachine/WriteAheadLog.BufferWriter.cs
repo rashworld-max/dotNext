@@ -3,12 +3,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DotNext.Net.Cluster.Consensus.Raft.StateMachine;
 
+using IO;
+
 public partial class WriteAheadLog
 {
     [SuppressMessage("Usage", "CA2213", Justification = "False positive")]
     private readonly PagedBufferWriter dataPages;
     
-    private sealed class PagedBufferWriter(PageManager manager) : Disposable, IBufferWriter<byte>, IMemoryView
+    private sealed class PagedBufferWriter(PageManager manager) : Disposable, IBufferWriter<byte>, IMemoryView, IAsyncBinaryWriter
     {
         public const string LocationPrefix = "data";
         
@@ -106,6 +108,24 @@ public partial class WriteAheadLog
             }
             
             base.Dispose(disposing);
+        }
+
+        Memory<byte> IAsyncBinaryWriter.Buffer => GetOrAdd(out var offset).Memory.Slice(offset);
+        
+        ValueTask IAsyncBinaryWriter.AdvanceAsync(int bytesWritten, CancellationToken token)
+        {
+            ValueTask task;
+            if (bytesWritten < 0)
+            {
+                task = ValueTask.FromException(new ArgumentOutOfRangeException(nameof(bytesWritten)));
+            }
+            else
+            {
+                task = ValueTask.CompletedTask;
+                LastWrittenAddress += (uint)bytesWritten;
+            }
+
+            return task;
         }
     }
 }
