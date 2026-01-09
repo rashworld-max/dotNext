@@ -44,30 +44,31 @@ All these things are implemented in 100% managed code on top of existing .NET AP
 * [NuGet Packages](https://www.nuget.org/profiles/rvsakno)
 
 # What's new
-Release Date: 11-04-2025
+Release Date: 01-09-2026
 
-<a href="https://www.nuget.org/packages/dotnext/5.26.1">DotNext 5.26.1</a>
-* Lock upgrade logic provided by `ReaderWriterSpinLock` is adjusted according to [275](https://github.com/dotnet/dotNext/issues/275)
+<a href="https://www.nuget.org/packages/dotnext/5.26.2">DotNext 5.26.2</a>
+* Fixed race condition in `Epoch` class
 
-<a href="https://www.nuget.org/packages/dotnext.metaprogramming/5.26.1">DotNext.Metaprogramming 5.26.1</a>
+<a href="https://www.nuget.org/packages/dotnext.metaprogramming/5.26.2">DotNext.Metaprogramming 5.26.2</a>
 * Updated dependencies
 
-<a href="https://www.nuget.org/packages/dotnext.unsafe/5.26.1">DotNext.Unsafe 5.26.1</a>
+<a href="https://www.nuget.org/packages/dotnext.unsafe/5.26.2">DotNext.Unsafe 5.26.2</a>
 * Updated dependencies
 
-<a href="https://www.nuget.org/packages/dotnext.threading/5.26.1">DotNext.Threading 5.26.1</a>
-* Lock upgrade logic provided by `AsyncReaderWriterLock` is adjusted according to [275](https://github.com/dotnet/dotNext/issues/275)
-* Improved accuracy of `CancellationTokenMultiplexer.Scope.IsTimedOut` property
-
-<a href="https://www.nuget.org/packages/dotnext.io/5.26.1">DotNext.IO 5.26.1</a>
-* Added auxiliary `MemorySegmentStream` wrapper over [Memory&lt;byte&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.memory-1) type in the form of the writable stream
+<a href="https://www.nuget.org/packages/dotnext.threading/5.26.2">DotNext.Threading 5.26.2</a>
 * Updated dependencies
 
-<a href="https://www.nuget.org/packages/dotnext.net.cluster/5.26.1">DotNext.Net.Cluster 5.26.1</a>
-* Fixed [276](https://github.com/dotnet/dotNext/issues/276)
+<a href="https://www.nuget.org/packages/dotnext.io/5.26.2">DotNext.IO 5.26.2</a>
+* Fixed handling of small buffer in the default methods of `IAsyncBinaryWriter` interface
 
-<a href="https://www.nuget.org/packages/dotnext.aspnetcore.cluster/5.26.1">DotNext.AspNetCore.Cluster 5.26.1</a>
-* Fixed [276](https://github.com/dotnet/dotNext/issues/276)
+<a href="https://www.nuget.org/packages/dotnext.net.cluster/5.26.2">DotNext.Net.Cluster 5.26.2</a>
+* Optimized write performance of `WriteAheadLog` class when the length of the custom log entry is not known
+
+<a href="https://www.nuget.org/packages/dotnext.aspnetcore.cluster/5.26.2">DotNext.AspNetCore.Cluster 5.26.2</a>
+* Updated dependencies
+
+<a href="https://www.nuget.org/packages/dotnext.maintenanceservices/0.8.0">DotNext.MaintenanceServices 0.8.0</a>
+* Migration to `System.CommandLine` release package
 
 Changelog for previous versions located [here](./CHANGELOG.md).
 

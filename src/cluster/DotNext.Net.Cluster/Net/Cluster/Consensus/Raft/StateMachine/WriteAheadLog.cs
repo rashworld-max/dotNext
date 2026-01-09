@@ -439,30 +439,14 @@ public partial class WriteAheadLog : Disposable, IAsyncDisposable, IPersistentSt
         }
         else if (dataPages.TryEnsureCapacity(entry.Length))
         {
-            task = entry.WriteToAsync(dataPages, token);
+            task = DataTransferObject.WriteToAsync(entry, dataPages, token);
         }
         else
         {
-            task = WriteSlowAsync(dataPages, entry, bufferAllocator, token);
+            task = entry.WriteToAsync(dataPages, token);
         }
 
         return task;
-
-        static async ValueTask WriteSlowAsync(IBufferWriter<byte> writer, TEntry entry, MemoryAllocator<byte> allocator, CancellationToken token)
-        {
-            const int bufferSize = 1024;
-            var buffer = allocator.AllocateAtLeast(bufferSize);
-            var stream = writer.AsStream();
-            try
-            {
-                await entry.WriteToAsync(stream, buffer.Memory, token).ConfigureAwait(false);
-            }
-            finally
-            {
-                buffer.Dispose();
-                await stream.DisposeAsync().ConfigureAwait(false);
-            }
-        }
     }
 
     private void WriteMetadata<TEntry>(TEntry entry, long index, ulong startAddress)
