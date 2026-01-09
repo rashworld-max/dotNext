@@ -1,6 +1,4 @@
-using System.Buffers;
 using System.Buffers.Binary;
-using System.Collections;
 using System.Runtime.InteropServices;
 
 namespace DotNext.Buffers.Binary;
@@ -98,10 +96,10 @@ public sealed class BinaryTransformationsTests : Test
     public static void BitwiseXor(int size)
     {
         var x = new uint[size];
-        Random.Shared.NextBytes(MemoryMarshal.AsBytes<uint>(x));
+        Random.Shared.NextBytes(MemoryMarshal.AsBytes(x.AsSpan()));
 
         var y = new uint[size];
-        Random.Shared.NextBytes(MemoryMarshal.AsBytes<uint>(y));
+        Random.Shared.NextBytes(MemoryMarshal.AsBytes(y.AsSpan()));
 
         var expected = BitwiseXorSlow(x, y);
         BinaryTransformations.BitwiseXor<uint>(x, y);
@@ -126,7 +124,7 @@ public sealed class BinaryTransformationsTests : Test
     public static void OnesComplement(int size)
     {
         var x = new uint[size];
-        Random.Shared.NextBytes(MemoryMarshal.AsBytes<uint>(x));
+        Random.Shared.NextBytes(MemoryMarshal.AsBytes(x.AsSpan()));
 
         var expected = OnesComplementSlow(x);
         BinaryTransformations.OnesComplement<uint>(x);
