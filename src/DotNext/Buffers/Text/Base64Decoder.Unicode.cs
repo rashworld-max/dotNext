@@ -49,7 +49,7 @@ public partial struct Base64Decoder
             tempBuffer.Write(BufferedChars);
             chars = chars.Slice(tempBuffer.Write(chars));
 
-            if (!DecodeFromUtf16Core(chars, ref bytes))
+            if (!DecodeFromUtf16Core(tempBuffer.Span, ref bytes))
                 return false;
         }
 
@@ -70,7 +70,7 @@ public partial struct Base64Decoder
         if (reservedBufferSize is GotPaddingFlag)
             goto bad_data;
 
-        var maxBytes = GetMaxDecodedLength(chars.Length);
+        var maxBytes = GetMaxDecodedLength(chars.Length + reservedBufferSize);
         var writer = new BufferWriterSlim<byte>(bytes.GetSpan(maxBytes));
         if (!DecodeFromUtf16Buffered(chars, ref writer))
             goto bad_data;

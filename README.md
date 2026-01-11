@@ -44,31 +44,10 @@ All these things are implemented in 100% managed code on top of existing .NET AP
 * [NuGet Packages](https://www.nuget.org/profiles/rvsakno)
 
 # What's new
-Release Date: 01-09-2026
+Release Date: 01-11-2026
 
-<a href="https://www.nuget.org/packages/dotnext/5.26.2">DotNext 5.26.2</a>
-* Fixed race condition in `Epoch` class
-
-<a href="https://www.nuget.org/packages/dotnext.metaprogramming/5.26.2">DotNext.Metaprogramming 5.26.2</a>
-* Updated dependencies
-
-<a href="https://www.nuget.org/packages/dotnext.unsafe/5.26.2">DotNext.Unsafe 5.26.2</a>
-* Updated dependencies
-
-<a href="https://www.nuget.org/packages/dotnext.threading/5.26.2">DotNext.Threading 5.26.2</a>
-* Updated dependencies
-
-<a href="https://www.nuget.org/packages/dotnext.io/5.26.2">DotNext.IO 5.26.2</a>
-* Fixed handling of small buffer in the default methods of `IAsyncBinaryWriter` interface
-
-<a href="https://www.nuget.org/packages/dotnext.net.cluster/5.26.2">DotNext.Net.Cluster 5.26.2</a>
-* Optimized write performance of `WriteAheadLog` class when the length of the custom log entry is not known
-
-<a href="https://www.nuget.org/packages/dotnext.aspnetcore.cluster/5.26.2">DotNext.AspNetCore.Cluster 5.26.2</a>
-* Updated dependencies
-
-<a href="https://www.nuget.org/packages/dotnext.maintenanceservices/0.8.0">DotNext.MaintenanceServices 0.8.0</a>
-* Migration to `System.CommandLine` release package
+<a href="https://www.nuget.org/packages/dotnext/5.26.3">DotNext 5.26.3</a>
+* Fixed partial Base64 decoding in `Base64Decoder` class
 
 Changelog for previous versions located [here](./CHANGELOG.md).
 
