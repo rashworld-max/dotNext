@@ -1,6 +1,10 @@
 Release Notes
 ====
 
+# 01-11-2026
+<a href="https://www.nuget.org/packages/dotnext/5.26.3">DotNext 5.26.3</a>
+* Fixed partial Base64 decoding in `Base64Decoder` class
+
 # 01-09-2026
 <a href="https://www.nuget.org/packages/dotnext/5.26.2">DotNext 5.26.2</a>
 * Fixed race condition in `Epoch` class
