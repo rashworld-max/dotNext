@@ -44,10 +44,10 @@ All these things are implemented in 100% managed code on top of existing .NET AP
 * [NuGet Packages](https://www.nuget.org/profiles/rvsakno)
 
 # What's new
-Release Date: 01-11-2026
+Release Date: 01-14-2026
 
-<a href="https://www.nuget.org/packages/dotnext/5.26.3">DotNext 5.26.3</a>
-* Fixed partial Base64 decoding in `Base64Decoder` class
+<a href="https://www.nuget.org/packages/dotnext.threading/5.26.3">DotNext.Threading 5.26.3</a>
+* Fixed race condition in `CancellationTokenMultiplexer` class
 
 Changelog for previous versions located [here](./CHANGELOG.md).
 
