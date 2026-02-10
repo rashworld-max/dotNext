@@ -637,12 +637,11 @@ public sealed class PoolingBufferedStream(Stream stream, bool leaveOpen = false)
         }
         else if (writePosition > 0)
         {
-            task = WriteAndFlushAsync(token);
+            task = FlushWriteAsync(token);
         }
         else
         {
-            Reset();
-            task = stream.FlushAsync(token);
+            task = FlushReadAsync(token);
         }
 
         return task;
@@ -652,7 +651,7 @@ public sealed class PoolingBufferedStream(Stream stream, bool leaveOpen = false)
 
     private ValueTask<T> GetDisposedTask<T>() => ValueTask.FromException<T>(new ObjectDisposedException(GetType().Name));
 
-    private async Task WriteAndFlushAsync(CancellationToken token)
+    private async Task FlushWriteAsync(CancellationToken token)
     {
         Debug.Assert(stream is not null);
         Debug.Assert(writePosition > 0);
@@ -664,6 +663,16 @@ public sealed class PoolingBufferedStream(Stream stream, bool leaveOpen = false)
         Reset();
     }
 
+    private async Task FlushReadAsync(CancellationToken token)
+    {
+        Debug.Assert(stream is not null);
+        Debug.Assert(writePosition is 0);
+
+        await stream.FlushAsync(token).ConfigureAwait(false);
+        ClearReadBufferBeforeWrite();
+        buffer.Dispose();
+    }
+
     /// <inheritdoc cref="Stream.Flush()"/>
     public override void Flush()
     {
@@ -672,7 +681,8 @@ public sealed class PoolingBufferedStream(Stream stream, bool leaveOpen = false)
 
         WriteCore();
         stream.Flush();
-        Reset();
+        ClearReadBufferBeforeWrite();
+        buffer.Dispose();
     }
 
     /// <inheritdoc/>

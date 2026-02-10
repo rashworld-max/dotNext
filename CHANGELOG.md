@@ -1,6 +1,10 @@
 Release Notes
 ====
 
+# 02-10-2026
+<a href="https://www.nuget.org/packages/dotnext.io/5.26.3">DotNext.IO 5.26.3</a>
+* Fixed incorrect position adjustment in `PoolingBufferedStream` class if internal buffer is not empty and flush is called
+
 # 01-14-2026
 <a href="https://www.nuget.org/packages/dotnext.threading/5.26.3">DotNext.Threading 5.26.3</a>
 * Fixed race condition in `CancellationTokenMultiplexer` class
