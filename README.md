@@ -46,8 +46,8 @@ All these things are implemented in 100% managed code on top of existing .NET AP
 # What's new
 Release Date: 01-14-2026
 
-<a href="https://www.nuget.org/packages/dotnext.threading/5.26.3">DotNext.Threading 5.26.3</a>
-* Fixed race condition in `CancellationTokenMultiplexer` class
+<a href="https://www.nuget.org/packages/dotnext.io/5.26.3">DotNext.IO 5.26.3</a>
+* Fixed incorrect position adjustment in `PoolingBufferedStream` class if internal buffer is not empty and flush is called
 
 Changelog for previous versions located [here](./CHANGELOG.md).
 
